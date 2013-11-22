@@ -17,6 +17,8 @@
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="css/zenburn.css">
 
+    <link rel="import" href="html/love-heart.html">
+
     <!-- If the query includes 'print-pdf', use the PDF print sheet -->
     <script>
       document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
@@ -53,9 +55,10 @@
 
 
         <section>
-        <h1>Thanks!</h1><br>
-        <img src="img/beer.gif" width="500px">
-          <p>By <a href="http://janantala.com/">Jan Antala</a> / <a href="http://twitter.com/janantala">@janantala</a></p>
+          <h1>Thanks!</h1><br>
+          <img src="img/beer.gif" width="500px">
+          <br>
+          <p>Made with <love-heart>love</love-heart> By <a href="http://janantala.com/">Jan Antala</a></p>
         </section>
       </div>
 
@@ -63,6 +66,7 @@
 
     <script src="js/head.min.js"></script>
     <script src="js/reveal.min.js"></script>
+    <script src="js/polymer.min.js"></script>
 
     <script>
 
