@@ -349,3 +349,7 @@ input.big {
 #knalli, #pp, #sgara, #max {
   border-radius: 50%;
 }
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  line-height: 1.5em !important;
+}
