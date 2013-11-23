@@ -60,12 +60,65 @@
           <h2>...Okay, lets get it started!</h2>
         </section>
 
+        <section>
+          <section>
+            <h2>Continuous Integration</h2>
+
+            <div class="fragment">
+              <img src="img/travis-ci.gif" class="no-shadow">
+              <h3>Travis CI</h3>
+            </div>
+          </section>
+
+          <section>
+            <h2>.travis.yml</h2>
+            <br>
+<pre><code>language: node_js
+node_js:
+  - "0.8"
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - npm install -g bower grunt-cli
+  - npm install
+  - bower install
+
+script: "grunt"
+</code></pre>
+          </section>
+
+          <section>
+            <img src="img/travis-on.png" class="no-shadow">
+            <p><a href="https://travis-ci.org">https://travis-ci.org</a></p>
+          </section>
+
+          <section>
+            <img src="img/travis-pr-ok.png" class="no-shadow">
+            <img src="img/travis-commit-ok.png" class="no-shadow fragment">
+            <img src="img/travis-pr-fail.png" class="no-shadow fragment">
+          </section>
+
+          <section>
+            <img src="img/travis-console.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h3>
+              Pro tip: <br>
+              To prevent your push from being built <br>
+              add <strong>[ci skip]</strong> to the commit message.
+            </h3>
+          </section>
+
+        </section>
+
 
         <section>
           <h1>Thanks!</h1><br>
-          <img src="img/beer.gif" width="500px">
+          <img src="img/beer.gif" width="500px" class="no-shadow">
           <br>
-          <p>Made with <love-heart>love</love-heart> by <a href="http://janantala.com/">Jan Antala</a></p>
+          <h3>Made with <love-heart>love</love-heart> by <a href="http://janantala.com/">Jan Antala</a></h3>
         </section>
       </div>
 
