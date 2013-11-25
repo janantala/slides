@@ -122,6 +122,52 @@ package.json
 
         <section>
           <section>
+            <h2>Tests</h2>
+            <img src="img/tests.gif">
+            <p><a href="http://karma-runner.github.io">Karma Test Runner</a></p>
+          </section>
+
+          <section>
+            <h2>test.conf.js</h2>
+<pre><code>module.exports = function(config) {
+  config.set({
+    basePath: '..',
+    files: [
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'src/angular-adaptive-detection.js',
+      'test/*.spec.js'
+    ],
+    frameworks: ['jasmine'],
+    singleRun: true,
+    browsers: [ 'Chrome' ]
+  });
+};
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Grunt plugin for Karma</h2>
+            <p><a href="https://github.com/karma-runner/grunt-karma">grunt-karma</a></p>
+<pre><code>var karmaConfig = function(configFile, customOptions) {
+  var options = { configFile: configFile, keepalive: true };
+  var travisOptions = process.env.TRAVIS && { browsers: ['Firefox'], reporters: 'dots' };
+  return grunt.util._.extend(options, customOptions, travisOptions);
+};
+</code></pre>
+
+<pre><code>karma: {
+  unit: {
+    options: karmaConfig('test/test.conf.js')
+  }
+},
+</code></pre>
+
+          </section>
+        </section>
+
+        <section>
+          <section>
             <h2>Documentation</h2>
             <img src="img/documentation.gif">
             <p><a href="https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation">Writing AngularJS Documentation</a></p>
