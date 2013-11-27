@@ -122,6 +122,51 @@ package.json
 
         <section>
           <section>
+            <img src="img/grunt.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>Gruntfile.js</h2>
+
+<pre><code>module.exports = function (grunt) {
+  grunt.loadNpmTasks('grunt-task');
+
+  grunt.registerTask('default', ['task1', 'task2']);
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    task1: {
+      options: {
+        ...
+      }
+    }
+    ...
+  });
+};
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Load tasks</h2>
+
+<p>Before:</p>
+<pre><code>grunt.loadNpmTasks('grunt-karma');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-concurrent');
+</code></pre>
+<br>
+
+<p>After:</p>
+<pre><code>require('load-grunt-tasks')(grunt);
+</code></pre>
+<br>
+            <p>Load multiple grunt tasks using globbing patterns <br><a href="https://github.com/sindresorhus/load-grunt-tasks">load-grunt-tasks</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
             <h2>Tests</h2>
             <img src="img/tests.gif">
             <p><a href="http://karma-runner.github.io">Karma Test Runner</a></p>
