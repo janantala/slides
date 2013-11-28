@@ -247,8 +247,17 @@ grunt.loadNpmTasks('grunt-concurrent');
 </code></pre>
           </section>
 
-          <section>
+          <section ng-controller="MyCtrl">
             <h2>Showtime</h2>
+
+            <p class="fragment"><strong>$detection.isiOS():</strong> <code>{{detection.isiOS()}}</code></p>
+            <p class="fragment"><strong>$detection.isAndroid():</strong> <code>{{detection.isAndroid()}}</code></p>
+            <br>
+            <div class="fragment">
+              <p><strong>$detection.getUserAgent():</strong></p>
+              <p><code>{{detection.getUserAgent()}}</code></p>
+            </div>
+
           </section>
 
           <section>
@@ -611,6 +620,16 @@ concat: {
       });
 
     </script>
+
+<script src="js/angular.min.js"></script>
+<script src="js/angular-adaptive-detection.min.js"></script>
+<script>
+
+var app = angular.module('myApp', ['adaptive.detection']);
+app.controller('MyCtrl', ['$scope', '$detection', function ($scope, $detection) {
+  $scope.detection = $detection;
+}]);
+</script>
 
   </body>
 </html>
