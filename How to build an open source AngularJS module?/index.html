@@ -169,6 +169,107 @@ grunt.loadNpmTasks('grunt-concurrent');
 
         <section>
           <section>
+            <img src="img/angular.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>AngularJS Module</h2>
+
+<pre><code>(function () {
+  'use strict';
+
+  var adaptive = angular.module('adaptive.detection', []);
+
+  // ...
+
+});
+</code></pre>
+<br>
+
+<h3>Inject the module into your app</h3>
+<pre><code>angular.module('myApp', ['adaptive.detection']);
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Lets create a provider</h2>
+
+<pre><code>adaptive.provider('$detection', [function() {
+
+  this.setUserAgent = function(userAgent) {
+    this.userAgent = userAgent;
+  };
+
+  this.$get = function() {
+    ...
+
+    return {
+      ...
+    }
+  };
+}]);
+</code></pre>
+<br>
+<h3>Configure $detectionProvider</h3>
+
+<pre><code>angular.module('myApp').config(function($detectionProvider){
+  $detectionProvider.setUserAgent('angular');
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Service</h2>
+
+<pre><code>this.$get = function() {
+  var userAgent = this.userAgent;
+
+  return {
+    getUserAgent: function(){
+      return userAgent;
+    },
+    isiOS: function(){
+      return (/(iPad|iPhone|iPod)/gi).test(userAgent);
+    },
+    isAndroid: function(){
+      return (/(Android)/gi).test(userAgent);
+    }
+  }
+};
+</code></pre>
+<br>
+
+<h3>Inject the service into your controller</h3>
+<pre><code>angular.module('myApp')
+.controller('MainCtrl', function($scope, $detection){
+  $scope.detection = $detection;
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Showtime</h2>
+          </section>
+
+          <section>
+            <h3>Always include live demo in your open source repository!</h3>
+            <p>You can use <a href="https://help.github.com/articles/creating-project-pages-manually">gh-pages</a> branch.</p>
+            <br>
+            <h4>
+              Pro tip: <br>
+              To start a local web server type
+              <strong><code>python -m SimpleHTTPServer</code></strong><br>
+              or use
+              <a href="https://github.com/gruntjs/grunt-contrib-connect">grunt-contrib-connect</a>
+            </h4>
+          </section>
+
+        </section>
+
+
+
+        <section>
+          <section>
             <h2>Tests</h2>
             <img src="img/tests.gif">
             <p><a href="http://karma-runner.github.io">Karma Test Runner</a></p>
