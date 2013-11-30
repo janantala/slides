@@ -323,6 +323,90 @@ grunt.loadNpmTasks('grunt-concurrent');
 </code></pre>
 
           </section>
+
+          <section>
+            <h2>unit.spec.js</h2>
+
+<pre><code>describe('adaptive.detection', function(){
+  describe('provider functionality', function() {
+    // ...
+  });
+
+  describe('public methods', function() {
+    // ...
+  });
+
+  // ...
+});
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Provider functionality</h2>
+
+<pre><code>var detection;
+beforeEach(module('adaptive.detection', function($detectionProvider) {
+  detection = $detectionProvider;
+}));
+
+it('should be defined', inject(function() {
+  expect(detection).toBeDefined();
+}));
+it('should have setUserAgent method', inject(function() {
+  expect(detection.setUserAgent).toBeDefined();
+  expect(typeof detection.setUserAgent).toBe('function');
+}));
+it('should have $get method', inject(function() {
+  expect(detection.$get).toBeDefined();
+  expect(typeof detection.$get).toBe('function');
+}));
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Public methods</h2>
+
+<pre><code>it('should be defined', inject(function($detection) {
+  expect($detection).toBeDefined();
+}));
+
+it('should have public methods', inject(function($detection) {
+  expect($detection.getUserAgent).toBeDefined();
+  expect($detection.isiOS).toBeDefined();
+  expect($detection.isAndroid).toBeDefined();
+
+  expect(typeof $detection.getUserAgent).toBe('function');
+  expect(typeof $detection.isiOS).toBe('function');
+  expect(typeof $detection.isAndroid).toBe('function');
+}));
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Test Android browser</h2>
+
+<pre><code>describe('test Android', function() {
+
+  beforeEach(module('adaptive.detection', function($detectionProvider) {
+    $detectionProvider.setUserAgent('Android');
+  }));
+
+  it('should detect Android browser', inject(function($detection) {
+    expect($detection.isAndroid()).toEqual(true);
+    expect($detection.isiOS()).toEqual(false);
+  }));
+});
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Run grunt test</h2>
+            <img src="img/grunt-karma.png" class="no-shadow">
+          </section>
         </section>
 
         <section>
