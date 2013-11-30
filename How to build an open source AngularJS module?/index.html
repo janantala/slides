@@ -413,11 +413,11 @@ it('should have public methods', inject(function($detection) {
           <section>
             <h2>Documentation</h2>
             <img src="img/documentation.gif">
-            <p><a href="https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation">Writing AngularJS Documentation</a></p>
           </section>
 
           <section>
             <h2>ngdoc</h2>
+            <p><a href="https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation">Writing AngularJS Documentation</a></p>
           </section>
 
           <section>
@@ -437,7 +437,6 @@ it('should have public methods', inject(function($detection) {
           <section>
             <h2>Commit Message Conventions</h2>
             <img src="img/commit.gif">
-            <p><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.uyo6cb12dt6w">AngularJS Git Commit Message Conventions</a></p>
           </section>
 
           <section>
@@ -448,7 +447,8 @@ it('should have public methods', inject(function($detection) {
 &lt;BLANK LINE&gt;
 &lt;footer&gt;
 </code></pre>
-
+<br>
+            <p><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.uyo6cb12dt6w">AngularJS Git Commit Message Conventions</a></p>
           </section>
 
           <section>
@@ -489,6 +489,19 @@ it('should have public methods', inject(function($detection) {
             <h3>Referencing issues</h3>
             <p>Closed bugs should be listed on a separate line in the footer prefixed with "Closes" keyword.</p>
             <p>Closes #123, #245, #992</p><br>
+          </section>
+
+          <section>
+            <h2>Example:</h2>
+<pre><code>feat($browser): onUrlChange event (popstate/hashchange/polling)
+
+Added new event to $browser:
+- forward popstate event if available
+- forward hashchange event if popstate not available
+- do polling when neither popstate nor hashchange available
+
+Breaks $browser.onHashChange, which was removed (use onUrlChange instead)
+</code></pre>
           </section>
         </section>
 
