@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>How to build an open source AnglurJS module?</title>
+
+    <meta name="author" content="Jan Antala">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme.css" id="theme">
+    <link rel="stylesheet" href="css/custom.css" id="theme">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="css/zenburn.css">
+
+    <link rel="import" href="html/love-heart.html">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides" ng-app="myApp">
+
+        <section>
+          <h1>How to build an open source AnglurJS module?</h1>
+          <br></br>
+          <br>
+          <p>By <a href="http://janantala.com/">Jan Antala</a> / <a href="http://twitter.com/janantala">@janantala</a></p>
+          <p>WebElement #25</p>
+        </section>
+
+        <section>
+          <section>
+          <h2>Hello, I am Jan Antala</h2>
+          <div>
+            <img src="img/ja.jpg" alt="me" class="profile">
+          </div>
+          </section>
+
+          <section>
+            <p><a href="http://angular-adaptive.github.io">http://angular-adaptive.github.io</a></p>
+            <img src="img/angular-adaptive.png" class="no-shadow">
+          </section>
+        </section>
+
+        <section>
+          <img src="img/bored.gif" class="no-shadow">
+          <br>
+          <br>
+          <h2>...Okay, lets get it started!</h2>
+        </section>
+
+        <section>
+          <img src="img/toolset.png" class="no-shadow">
+        </section>
+
+        <section>
+          <section>
+            <h2>Lets create a new repo</h2>
+            <img src="img/new-repo.png">
+          </section>
+
+          <section>
+            <h2>Naming Conventions</h2>
+
+            <p>angular-[optional-namespace]-[thing-name]-[optional-thing-type]</p>
+            <br>
+            <p>Example:</p>
+            <p>angular-qr</p>
+            <p>angular-adaptive-speech</p>
+            <br>
+            <p>Specification for reusable AngularJS components: <a href="https://github.com/angular/angular-component-spec">angular-component-spec</a></p>
+          </section>
+
+          <section>
+            <h2>Which license?</h2>
+            <p>Choosing an OSS license doesn’t need to be scary</p>
+            <p><a href="http://choosealicense.com/">choosealicense.com</a></p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>AngularJS component</h2>
+
+<pre><code>src/
+  angular-adaptive-detection.js
+test/
+  test.conf.js
+  unit.spec.js
+.bowerrc
+.gitignore
+.travis.yml
+CHANGELOG.md
+CONTRIBUTING.md
+Gruntfile.js
+LICENSE
+angular-adaptive-detection.js
+angular-adaptive-detection.min.js
+bower.json
+package.json
+</code></pre>
+<br>
+<h3>Seed for reusable Angular components: <a href="https://github.com/PascalPrecht/angular-component-seed">angular-component-seed</a></h3>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <img src="img/grunt.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>Gruntfile.js</h2>
+
+<pre><code>module.exports = function (grunt) {
+  grunt.loadNpmTasks('grunt-task');
+
+  grunt.registerTask('default', ['task1', 'task2']);
+
+  // Project configuration.
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    task1: {
+      options: {
+        ...
+      }
+    }
+    ...
+  });
+};
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Load tasks</h2>
+            <h4>Pro tip: <br>
+            Load multiple grunt tasks using globbing patterns <br><a href="https://github.com/sindresorhus/load-grunt-tasks">load-grunt-tasks</a></h4><br>
+
+<p>Before:</p>
+<pre><code>grunt.loadNpmTasks('grunt-karma');
+grunt.loadNpmTasks('grunt-contrib-jshint');
+grunt.loadNpmTasks('grunt-concurrent');
+</code></pre>
+<br>
+
+<p>After:</p>
+<pre><code>require('load-grunt-tasks')(grunt);
+</code></pre>
+<br>
+
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <img src="img/angular.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>AngularJS Module</h2>
+
+<pre><code>(function () {
+  'use strict';
+
+  var adaptive = angular.module('adaptive.detection', []);
+
+  // ...
+
+});
+</code></pre>
+<br>
+
+<h3>Inject the module into your app</h3>
+<pre><code>angular.module('myApp', ['adaptive.detection']);
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Lets create a provider</h2>
+
+<pre><code>adaptive.provider('$detection', [function() {
+
+  this.setUserAgent = function(userAgent) {
+    this.userAgent = userAgent;
+  };
+
+  this.$get = function() {
+    ...
+
+    return {
+      ...
+    }
+  };
+}]);
+</code></pre>
+<br>
+<h3>Configure $detectionProvider</h3>
+
+<pre><code>angular.module('myApp').config(function($detectionProvider){
+  $detectionProvider.setUserAgent('angular');
+});
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Service</h2>
+
+<pre><code>this.$get = function() {
+  var userAgent = this.userAgent;
+
+  return {
+    getUserAgent: function(){
+      return userAgent;
+    },
+    isiOS: function(){
+      return (/(iPad|iPhone|iPod)/gi).test(userAgent);
+    },
+    isAndroid: function(){
+      return (/(Android)/gi).test(userAgent);
+    }
+  }
+};
+</code></pre>
+<br>
+
+<h3>Inject the service into your controller</h3>
+<pre><code>angular.module('myApp')
+.controller('MainCtrl', function($scope, $detection){
+  $scope.detection = $detection;
+});
+</code></pre>
+          </section>
+
+          <section ng-controller="MyCtrl">
+            <h2>Showtime</h2>
+
+            <p class="fragment"><strong>$detection.isiOS():</strong> <code>{{detection.isiOS()}}</code></p>
+            <p class="fragment"><strong>$detection.isAndroid():</strong> <code>{{detection.isAndroid()}}</code></p>
+            <br>
+            <div class="fragment">
+              <p><strong>$detection.getUserAgent():</strong></p>
+              <p><code>{{detection.getUserAgent()}}</code></p>
+            </div>
+
+          </section>
+
+          <section>
+            <h3>Always include live demo in your open source repository!</h3>
+            <p>You can use <a href="https://help.github.com/articles/creating-project-pages-manually">gh-pages</a> branch.</p>
+            <br>
+            <h4>
+              Pro tip: <br>
+              To start a local web server type
+              <strong><code>python -m SimpleHTTPServer</code></strong><br>
+              or use
+              <a href="https://github.com/gruntjs/grunt-contrib-connect">grunt-contrib-connect</a>
+            </h4>
+          </section>
+
+        </section>
+
+
+
+        <section>
+          <section>
+            <h2>Tests</h2>
+            <img src="img/tests.gif">
+          </section>
+
+          <section>
+            <h2>test.conf.js</h2>
+<pre><code>module.exports = function(config) {
+  config.set({
+    basePath: '..',
+    files: [
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'src/angular-adaptive-detection.js',
+      'test/*.spec.js'
+    ],
+    frameworks: ['jasmine'],
+    singleRun: true,
+    browsers: [ 'Chrome' ]
+  });
+};
+</code></pre>
+<br>
+            <p><a href="http://karma-runner.github.io">Karma Test Runner</a></p>
+
+          </section>
+
+          <section>
+            <h2>Grunt plugin for Karma</h2>
+            <p><a href="https://github.com/karma-runner/grunt-karma">grunt-karma</a></p>
+<pre><code>var karmaConfig = function(configFile, customOptions) {
+  var options = { configFile: configFile, keepalive: true };
+  var travisOptions = process.env.TRAVIS && { browsers: ['Firefox'], reporters: 'dots' };
+  return grunt.util._.extend(options, customOptions, travisOptions);
+};
+</code></pre>
+<br>
+<pre><code>karma: {
+  unit: {
+    options: karmaConfig('test/test.conf.js')
+  }
+},
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>unit.spec.js</h2>
+
+<pre><code>describe('adaptive.detection', function(){
+  describe('provider functionality', function() {
+    // ...
+  });
+
+  describe('public methods', function() {
+    // ...
+  });
+
+  // ...
+});
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Provider functionality</h2>
+
+<pre><code>var detection;
+beforeEach(module('adaptive.detection', function($detectionProvider) {
+  detection = $detectionProvider;
+}));
+
+it('should be defined', inject(function() {
+  expect(detection).toBeDefined();
+}));
+it('should have setUserAgent method', inject(function() {
+  expect(detection.setUserAgent).toBeDefined();
+  expect(typeof detection.setUserAgent).toBe('function');
+}));
+it('should have $get method', inject(function() {
+  expect(detection.$get).toBeDefined();
+  expect(typeof detection.$get).toBe('function');
+}));
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Public methods</h2>
+
+<pre><code>it('should be defined', inject(function($detection) {
+  expect($detection).toBeDefined();
+}));
+
+it('should have public methods', inject(function($detection) {
+  expect($detection.getUserAgent).toBeDefined();
+  expect($detection.isiOS).toBeDefined();
+  expect($detection.isAndroid).toBeDefined();
+
+  expect(typeof $detection.getUserAgent).toBe('function');
+  expect(typeof $detection.isiOS).toBe('function');
+  expect(typeof $detection.isAndroid).toBe('function');
+}));
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Test Android browser</h2>
+
+<pre><code>describe('test Android', function() {
+
+  beforeEach(module('adaptive.detection', function($detectionProvider) {
+    $detectionProvider.setUserAgent('Android');
+  }));
+
+  it('should detect Android browser', inject(function($detection) {
+    expect($detection.isAndroid()).toEqual(true);
+    expect($detection.isiOS()).toEqual(false);
+  }));
+});
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Run grunt test</h2>
+            <img src="img/grunt-karma.png" class="no-shadow">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Documentation</h2>
+            <img src="img/documentation.gif">
+          </section>
+
+          <section>
+            <h2>Readme.md</h2>
+            <h3><ul>
+              <li>Requirements</li>
+              <li>Installation</li>
+              <li>Usage</li>
+              <li>Contributing (nobody reads)</li>
+              <li>License</li>
+            </ul></h3>
+          </section>
+
+          <section>
+            <h2>ngdoc</h2>
+            <p><a href="https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation">Writing AngularJS Documentation</a></p>
+            <br>
+            <p>Extends <a href="http://usejsdoc.org/">jsdoc</a></p><br>
+            <p>All the docs are stored inline in the source code <br>and so is kept in sync as the code changes.</p>
+          </section>
+
+          <section>
+            <img src="img/ngdoc.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>How to create api docs?</h2>
+            <div class="fragment">
+              <p>I have a grunt task for that!</p>
+              <p><a href="https://github.com/m7r/grunt-ngdocs">grunt-ngdocs</a></p>
+            </div>
+          </section>
+
+          <section>
+            <img src="img/api-docs.png" class="no-shadow">
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Commit Message Conventions</h2>
+            <img src="img/commit.gif">
+          </section>
+
+          <section>
+            <h2>Format of the commit message</h2>
+<pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+&lt;BLANK LINE&gt;
+&lt;body&gt;
+&lt;BLANK LINE&gt;
+&lt;footer&gt;
+</code></pre>
+<br>
+            <p><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.uyo6cb12dt6w">AngularJS Git Commit Message Conventions</a></p>
+          </section>
+
+          <section>
+            <h2>Type</h2>
+            <h3>
+              <ul>
+                <li>feat (feature)</li>
+                <li>fix (bug fix)</li>
+                <li>docs (documentation)</li>
+                <li>style (formatting, missing semi colons, ...)</li>
+                <li>refactor</li>
+                <li>test (when adding missing tests)</li>
+                <li>chore (maintain)</li>
+              </ul>
+            </h3>
+          </section>
+
+          <section>
+            <h2>Subject</h2>
+            <p>
+            <ul>
+              <li>use imperative, present tense: “change” not “changed” nor “changes”</li>
+              <li>don't capitalize first letter</li>
+              <li>no dot (.) at the end</li>
+            </ul>
+          </p><br>
+
+            <h2>Message body</h2>
+            <p>Includes motivation for the change and contrasts with previous behavior</p>
+          </section>
+
+          <section>
+            <h2>Message footer</h2>
+
+            <h3>Breaking changes</h3>
+            <p>Include description of the change, justification and migration notes</p><br>
+
+            <h3>Referencing issues</h3>
+            <p>Closed bugs should be listed on a separate line in the footer prefixed with "Closes" keyword.</p>
+            <p>Closes #123, #245, #992</p><br>
+          </section>
+
+          <section>
+            <h2>Example:</h2>
+<pre><code>feat($browser): onUrlChange event (popstate/hashchange/polling)
+
+Added new event to $browser:
+- forward popstate event if available
+- forward hashchange event if popstate not available
+- do polling when neither popstate nor hashchange available
+
+Breaks $browser.onHashChange, which was removed (use onUrlChange instead)
+</code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Continuous Integration</h2>
+
+            <div>
+              <img src="img/travis-ci.gif" class="no-shadow">
+              <h3>Travis CI</h3>
+            </div>
+          </section>
+
+          <section>
+            <h2>.travis.yml</h2>
+            <br>
+<pre><code>language: node_js
+node_js:
+  - "0.10"
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - npm install -g bower grunt-cli
+  - npm install
+  - bower install
+
+script: "grunt"
+</code></pre>
+          </section>
+
+          <section>
+            <img src="img/travis-on.png" class="no-shadow">
+            <p><a href="https://travis-ci.org">https://travis-ci.org</a></p>
+          </section>
+
+          <section>
+            <img src="img/travis-pr-ok.png" class="no-shadow">
+            <img src="img/travis-commit-ok.png" class="no-shadow fragment">
+            <img src="img/travis-pr-fail.png" class="no-shadow fragment">
+          </section>
+
+          <section>
+            <img src="img/travis-console.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h3>
+              Pro tip: <br>
+              To prevent your push from being built <br>
+              add <strong>[ci skip]</strong> to the commit message.
+            </h3>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Release</h2>
+            <img src="img/release.gif">
+          </section>
+
+          <section>
+            <h2>Bower</h2>
+            <img src="img/bower.png" class="no-shadow">
+            <p>
+              <a href="https://docs.google.com/document/d/1APq7oA9tNao1UYWyOm8dKqlRP2blVkROYLZ2fLIjtWc/edit">Bower spec</a>
+              /
+              <a href="http://bower.io/">bower.io</a>
+            </p>
+          </section>
+
+          <section>
+            <h2>Registering packages</h2>
+<pre><code>bower register &lt;my-package-name&gt; &lt;git-endpoint&gt;
+
+bower register angular-adaptive-detection
+  git://github.com/angular-adaptive/adaptive-detection.git
+</code></pre>
+<br>
+
+<h3>Install package <br>from bower registry, github or git endpoint</h3>
+<pre><code>bower install angular-adaptive-detection
+bower install angular-adaptive/adaptive-detection
+bower install git://github.com/angular-adaptive/adaptive-detection.git
+</code></pre>
+
+          </section>
+
+          <section>
+            <h2>Changelog</h2>
+            <p>I have a grunt task for that!</p>
+            <p><a href="https://github.com/btford/grunt-conventional-changelog">grunt-conventional-changelog</a></p><br>
+
+<pre><code>changelog: {
+  options: {
+    dest: 'CHANGELOG.md'
+  }
+},
+</code></pre>
+          </section>
+
+          <section>
+            <img src="img/changelog.png" class="no-shadow">
+          </section>
+
+          <section>
+            <h2>Bump versions</h2>
+            <p><a href="https://github.com/vojtajina/grunt-bump">grunt-bump</a></p>
+
+<pre><code>bump: {
+  files: ['package.json', 'bower.json'],
+  updateConfigs: ['pkg']
+},
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Concat and uglify</h2>
+            <p><a href="https://github.com/gruntjs/grunt-contrib-concat">grunt-contrib-concat</a></p>
+            <p><a href="https://github.com/gruntjs/grunt-contrib-uglify">grunt-contrib-uglify</a></p>
+
+<pre><code>uglify: {
+  options: { preserveComments: 'some' },
+  dist: {
+    src: '<%= pkg.name %>.js',
+    dest: '<%= pkg.name %>.min.js'
+  }
+},
+concat: {
+  options: {
+    process: true,
+    banner: '<%= meta.banner %>\n\n'
+  },
+  dist: {
+    src: 'src/<%= pkg.name %>.js',
+    dest: '<%= pkg.name %>.js'
+  }
+},
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Draft a new version...</h2>
+            <img src="img/github-release.png" class="no-shadow">
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Promotion</h2>
+            <img src="img/promotion.gif">
+          </section>
+
+          <section>
+            <h3>Twitter</h3>
+
+            <p>mention <a href="https://twitter.com/angularjs">@AngularJS</a></p>
+            <p>hashtag <a href="https://twitter.com/search?q=AngularJS">#AngularJS</a></p>
+
+            <a href="https://twitter.com/bradlygreen/status/346773064513638400" class="fragment">
+              <img src="img/bradlygreen.png" class="no-shadow">
+            </a>
+          </section>
+
+
+          <section>
+            <h3>Google+</h3>
+            <a href="https://plus.google.com/communities/115368820700870330756">
+              <img src="img/gplus.png" class="no-shadow">
+            </a>
+            <p><a href="https://plus.google.com/communities/115368820700870330756">AngularJS Community</a></p>
+          </section>
+
+          <section>
+            <h3>ngModules</h3>
+            <a href="http://ngmodules.org/modules/adaptive-speech">
+              <img src="img/ngmodules.png" class="no-shadow">
+            </a>
+            <p><a href="http://ngmodules.org/">http://ngmodules.org/</a></p>
+
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Join to the open source community!</h2>
+          </section>
+          <section>
+            <img src="img/24pr.png" class="no-shadow">
+            <p><a href="http://24pullrequests.com/">http://24pullrequests.com/</a></p>
+          </section>
+        </section>
+
+        <section>
+          <h1>Thanks!</h1>
+          <img src="img/beer.gif" width="500px" class="no-shadow">
+          <br>
+          <h3>Made with <love-heart>love</love-heart> by <a href="http://janantala.com/">Jan Antala</a></h3>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+    <script src="js/polymer.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+<script src="js/angular.min.js"></script>
+<script src="js/angular-adaptive-detection.min.js"></script>
+<script>
+
+var app = angular.module('myApp', ['adaptive.detection']);
+app.controller('MyCtrl', ['$scope', '$detection', function ($scope, $detection) {
+  $scope.detection = $detection;
+}]);
+</script>
+
+  </body>
+</html>
