@@ -8,11 +8,12 @@
 }
 
 .reveal section img.profile {
-  -moz-transform: rotate(8deg);
-  -ms-transform: rotate(8deg);
-  -o-transform: rotate(8deg);
-  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
   margin-top: 50px;
+  width: 500px;
 }
 
 .reveal section img.soccer {
@@ -23,20 +24,20 @@
   margin-top: 50px;
 }
 
-.reveal p.name-me {
+.reveal p.profile-work {
   position: absolute;
-  right: -120px;
+  right: -50px;
   top: 250px;
   width: 220px;
   z-index: 1;
   -webkit-transform: rotate(10deg);
 }
 
-.reveal p.name-him {
+.reveal p.profile-school {
   position: absolute;
-  left: -100px;
+  left: -50px;
   width: 230px;
-  bottom: 250px;
+  top: 250px;
   -webkit-transform: rotate(-10deg);
 }
 
