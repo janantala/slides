@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<title>A collection of Jan Antala's talk slides</title>
+
+<meta name="author" content="Jan Antala">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,300' rel='stylesheet' type='text/css'>
+<link rel="import" href="http://rawgithub.com/janantala/love-heart/master/love-heart.html">
+
+<style>
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Titillium Web', sans-serif; 
+}
+
+header, footer {
+  background-color: rgb(180,150,115);
+  padding: 5px 0;
+}
+
+.content {
+  min-height: 100%;
+  margin-bottom: -100px;
+}
+
+.content:after {
+  content: "";
+  display: block;
+}
+
+footer, .content:after {
+  min-height: 100px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+.center {
+  text-align: center;
+}
+
+.thin {
+  font-weight: 100;
+}
+
+.white {
+  color: white;
+}
+
+.talks {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.talk {
+  padding: 20px 0;
+}
+
+.talk img {
+  width: 100%;
+}
+
+.talk a {
+  color: rgb(146,145,41);
+}
+
+</style>
+</head>
+
+<body>
+  <div class="content">
+    <header class="center">
+      <h1 class="thin white">A collection of <i>Jan Antala's</i> talk slides</h1>
+    </header>
+
+    <section class="talks">
+
+      <section class="talk">
+        <div>
+          <a href="how-to-build-an-open-source-angularjs-module">
+            <img src="how-to-build-an-open-source-angularjs-module/img/title.png" alt="How to build an open source AnglurJS module?">
+          </a>
+        </div>
+        <div>
+          <p><a href="http://webelement.sk/">WebElement #25</a> feat. <a href="http://www.meetup.com/Slovak-AngularJS-User-Group/">Slovak AngularJS #3</a></p>
+          <p>Bratislava, 5th December 2013</p>
+          <a href="how-to-build-an-open-source-angularjs-module">View slides</a>
+        </div>
+      </section>
+
+      <hr>
+
+      <section class="talk">
+        <div>
+          <h2 class="thin">No more talks...</h2>
+        </div>
+      </section>
+
+    </section>
+  </div>
+  
+  <footer class="center">
+    <p>Made with <love-heart class="white">love</love-heart> by <a href="http://janantala.com" class="white">Jan Antala</a></p>
+    <p>2013 Licensed under <a href="http://opensource.org/licenses/MIT" class="white">MIT</a></p>
+  </footer>
+
+<script>
+  if (!window.Polymer) {
+    var script = document.createElement('script');
+    script.src = 'http://www.polymer-project.org/polymer.min.js?20131025';
+    document.head.appendChild(script);
+  }
+</script>
+</body>
+</html>
