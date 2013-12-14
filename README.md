@@ -15,4 +15,4 @@
 
 The MIT License
 
-Copyright (c) 2013 Jan Antala, http://janantala.com
+Copyright (c) 2013 [Jan Antala](http://www.janantala.com)
