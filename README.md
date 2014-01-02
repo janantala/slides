@@ -1,18 +1,21 @@
 # A collection of my talk slides
 
-## How to build an open source AnglurJS module?
-
 <p align="center">
-    <img src="https://raw.github.com/janantala/slides/master/how-to-build-an-open-source-angularjs-module/img/toolset.png" alt="toolset" />
+    <a href="http://www.janantala.com/slides/how-to-build-an-open-source-angularjs-module/#/">
+    <img src="https://raw.github.com/janantala/slides/master/how-to-build-an-open-source-angularjs-module/img/title.png" alt="How to build an open source AnglurJS module?"/>
+    </a>
 </p>
 
-### Slides
+[WebElement](http://webelement.sk/) #25 feat. [Slovak AngularJS](http://www.meetup.com/Slovak-AngularJS-User-Group/) #3
 
-[View slides](http://janantala.github.io/slides/how-to-build-an-open-source-angularjs-module/#/)
+Bratislava, 5th December 2013
 
+[View slides](http://www.janantala.com/slides/how-to-build-an-open-source-angularjs-module/#/)
+
+-
 
 # License
 
 The MIT License
 
-Copyright (c) 2013 Jan Antala, http://janantala.com
+Copyright (c) 2013 [Jan Antala](http://www.janantala.com)
