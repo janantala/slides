@@ -1,6 +1,20 @@
 # A collection of my talk slides
 
 <p align="center">
+    <a href="https://raw.github.com/janantala/slides/master/beyond-adaptive-web-design/poster.png">
+    <img src="https://raw.github.com/janantala/slides/master/beyond-adaptive-web-design/preview.png" alt="Beyond Adaptive Web Design"/>
+    </a>
+</p>
+
+[IIT.SRC 2014](http://www.fiit.stuba.sk/iit-src)
+
+Bratislava, 29th April 2014
+
+[View poster](https://raw.github.com/janantala/slides/master/beyond-adaptive-web-design/poster.png)
+
+-
+
+<p align="center">
     <a href="http://www.janantala.com/slides/how-to-build-an-open-source-angularjs-module/#/">
     <img src="https://raw.github.com/janantala/slides/master/how-to-build-an-open-source-angularjs-module/img/title.png" alt="How to build an open source AnglurJS module?"/>
     </a>
