@@ -1,0 +1,3 @@
+[submodule "adaptive-web-design-slides"]
+	path = adaptive-web-design-slides
+	url = https://github.com/janantala/adaptive-web-design-slides.git
